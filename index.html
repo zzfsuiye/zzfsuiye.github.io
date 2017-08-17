@@ -200,7 +200,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -210,7 +210,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -282,7 +282,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-17T11:00:00+08:00">
                 2017-08-17
@@ -303,7 +303,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -446,7 +446,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-16T15:00:00+08:00">
                 2017-08-16
@@ -467,7 +467,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -562,145 +562,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/15/runtime_ivar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张中峰笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/15/runtime_ivar/" itemprop="url">Objective-C Runtime 运行时：变量的操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-15T17:00:00+08:00">
-                2017-08-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="变量的定义"><a href="#变量的定义" class="headerlink" title="变量的定义"></a>变量的定义</h2><p>首先我们先看下运行时中对变量的定义：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_ivar *Ivar;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> objc_ivar &#123;</div><div class="line">    <span class="keyword">char</span> *ivar_name                                          OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">char</span> *ivar_type                                          OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">int</span> ivar_offset                                          OBJC2_UNAVAILABLE;</div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __LP64__</span></div><div class="line">    <span class="keyword">int</span> space                                                OBJC2_UNAVAILABLE;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>其中：<code>ivar_name</code>为变量的名字，<code>ivar_type</code>为变量的类型,<code>ivar_offset</code>为变量地址相对于对象地址的偏移量。</p>
-<h2 id="变量的相关操作"><a href="#变量的相关操作" class="headerlink" title="变量的相关操作"></a>变量的相关操作</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *ivar_getName(Ivar v);<span class="comment">//获取Ivar的名称</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *ivar_getTypeEncoding(Ivar v)<span class="comment">//获取Ivar的类型编码,</span></div><div class="line">Ivar class_getInstanceVariable(Class cls, <span class="keyword">const</span> <span class="keyword">char</span> *name)<span class="comment">//通过变量名称获取类中的实例成员变量</span></div><div class="line">Ivar class_getClassVariable(Class cls, <span class="keyword">const</span> <span class="keyword">char</span> *name)<span class="comment">//通过变量名称获取类中的类成员变量,暂没找到用法。</span></div><div class="line">Ivar *class_copyIvarList(Class cls, <span class="keyword">unsigned</span> <span class="keyword">int</span> *outCount) <span class="comment">//获取指定类的Ivar列表及Ivar个数,注意，返回的列表不包含父类的成员变量和属性。</span></div><div class="line"><span class="keyword">id</span> object_getIvar(<span class="keyword">id</span> obj, Ivar ivar) <span class="comment">//获取实例对象中Ivar的值</span></div><div class="line"><span class="keyword">void</span> object_setIvar(<span class="keyword">id</span> obj, Ivar ivar, <span class="keyword">id</span> value)<span class="comment">//设置实例对象中Ivar的值</span></div><div class="line">OBJC_EXPORT <span class="built_in">BOOL</span> class_addIvar(Class cls, <span class="keyword">const</span> <span class="keyword">char</span> *name, size_t size, </div><div class="line">                             uint8_t alignment, <span class="keyword">const</span> <span class="keyword">char</span> *types) <span class="comment">//添加变量</span></div></pre></td></tr></table></figure>
-<p>运行时规定,只能在<code>objc_allocateClassPair</code>与<code>objc_registerClassPair</code>两个函数之间为类添加变量<br>添加变量,所以class_addIvar函数在“Objective-C Runtime 运行时：创建类”中进行操作</p>
-<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ZZFRuntimeIvar</span> : <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="built_in">NSString</span> *_ivar;</div><div class="line">    <span class="keyword">int</span> _number;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span>  *property;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)printfIvars;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"ZZFRuntimeIvar.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"objc/runtime.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"objc/objc.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ZZFRuntimeIvar</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)init</div><div class="line">&#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">        _ivar = <span class="string">@"ivar"</span>;</div><div class="line">        <span class="keyword">self</span>.property = <span class="string">@"zhang"</span>;   </div><div class="line">     </div><div class="line">        Ivar var = class_getInstanceVariable([<span class="keyword">self</span> <span class="keyword">class</span>], <span class="string">"_ivar"</span>);<span class="comment">//通过变量名称获取类中的实例成员_ivar</span></div><div class="line">        object_setIvar(<span class="keyword">self</span>, var, <span class="string">@"test"</span>);<span class="comment">//这里把实例变量_ivar的值更改为"test"，覆盖掉原理的"ivar"</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)printfIvars</div><div class="line">&#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count;</div><div class="line">    <span class="comment">//获取对象的实例变量列表，包含属性自动创建的示例变量，本例子中属性property自动创建_property示例变量也会在变量列表中,******************注意，返回的列表不包含父类的成员变量和属性******************。</span></div><div class="line">    Ivar *ivarList =  class_copyIvarList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        Ivar ivar = ivarList[i];</div><div class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *type = ivar_getTypeEncoding(ivar);<span class="comment">//获取变量的类型</span></div><div class="line">        <span class="built_in">NSString</span> *stringType =  [<span class="built_in">NSString</span> stringWithCString:type encoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">        <span class="built_in">NSString</span> *name = [<span class="built_in">NSString</span> stringWithCString:ivar_getName(ivar) encoding:<span class="built_in">NSUTF8StringEncoding</span>];<span class="comment">//获取变量的名字</span></div><div class="line"><span class="comment">//打印变量类型，变量名，变量地址相对于对象地址的偏移量，变量的值						              NSLog(@"=====%@=====%@===%td====%@",stringType,name,ivar_getOffset(ivar),object_getIvar(self, ivar));</span></div><div class="line">    &#125;</div><div class="line">    free(ivarList);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>通过调用printfIvars的结果是<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">2017-08-15</span> <span class="number">17</span>:<span class="number">37:18.872</span> ZZFRuntimeDemo[<span class="number">7728:503157</span>] =====@"NSString"=====_ivar===<span class="number">760</span>====test</div><div class="line"><span class="number">2017-08-15</span> <span class="number">17</span>:<span class="number">37:18.872</span> ZZFRuntimeDemo[<span class="number">7728:503157</span>] =====@"NSString"=====_property===<span class="number">768</span>====zhang</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/15/runtime_class/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -730,7 +591,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-15T17:00:00+08:00">
                 2017-08-15
@@ -751,7 +612,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -865,6 +726,145 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/15/runtime_ivar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张中峰笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/15/runtime_ivar/" itemprop="url">Objective-C Runtime 运行时：变量的操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-15T17:00:00+08:00">
+                2017-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="变量的定义"><a href="#变量的定义" class="headerlink" title="变量的定义"></a>变量的定义</h2><p>首先我们先看下运行时中对变量的定义：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_ivar *Ivar;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> objc_ivar &#123;</div><div class="line">    <span class="keyword">char</span> *ivar_name                                          OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">char</span> *ivar_type                                          OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">int</span> ivar_offset                                          OBJC2_UNAVAILABLE;</div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __LP64__</span></div><div class="line">    <span class="keyword">int</span> space                                                OBJC2_UNAVAILABLE;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中：<code>ivar_name</code>为变量的名字，<code>ivar_type</code>为变量的类型,<code>ivar_offset</code>为变量地址相对于对象地址的偏移量。</p>
+<h2 id="变量的相关操作"><a href="#变量的相关操作" class="headerlink" title="变量的相关操作"></a>变量的相关操作</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *ivar_getName(Ivar v);<span class="comment">//获取Ivar的名称</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *ivar_getTypeEncoding(Ivar v)<span class="comment">//获取Ivar的类型编码,</span></div><div class="line">Ivar class_getInstanceVariable(Class cls, <span class="keyword">const</span> <span class="keyword">char</span> *name)<span class="comment">//通过变量名称获取类中的实例成员变量</span></div><div class="line">Ivar class_getClassVariable(Class cls, <span class="keyword">const</span> <span class="keyword">char</span> *name)<span class="comment">//通过变量名称获取类中的类成员变量,暂没找到用法。</span></div><div class="line">Ivar *class_copyIvarList(Class cls, <span class="keyword">unsigned</span> <span class="keyword">int</span> *outCount) <span class="comment">//获取指定类的Ivar列表及Ivar个数,注意，返回的列表不包含父类的成员变量和属性。</span></div><div class="line"><span class="keyword">id</span> object_getIvar(<span class="keyword">id</span> obj, Ivar ivar) <span class="comment">//获取实例对象中Ivar的值</span></div><div class="line"><span class="keyword">void</span> object_setIvar(<span class="keyword">id</span> obj, Ivar ivar, <span class="keyword">id</span> value)<span class="comment">//设置实例对象中Ivar的值</span></div><div class="line">OBJC_EXPORT <span class="built_in">BOOL</span> class_addIvar(Class cls, <span class="keyword">const</span> <span class="keyword">char</span> *name, size_t size, </div><div class="line">                             uint8_t alignment, <span class="keyword">const</span> <span class="keyword">char</span> *types) <span class="comment">//添加变量</span></div></pre></td></tr></table></figure>
+<p>运行时规定,只能在<code>objc_allocateClassPair</code>与<code>objc_registerClassPair</code>两个函数之间为类添加变量<br>添加变量,所以class_addIvar函数在“Objective-C Runtime 运行时：创建类”中进行操作</p>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ZZFRuntimeIvar</span> : <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="built_in">NSString</span> *_ivar;</div><div class="line">    <span class="keyword">int</span> _number;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span>  *property;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)printfIvars;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"ZZFRuntimeIvar.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"objc/runtime.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"objc/objc.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ZZFRuntimeIvar</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)init</div><div class="line">&#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">        _ivar = <span class="string">@"ivar"</span>;</div><div class="line">        <span class="keyword">self</span>.property = <span class="string">@"zhang"</span>;   </div><div class="line">     </div><div class="line">        Ivar var = class_getInstanceVariable([<span class="keyword">self</span> <span class="keyword">class</span>], <span class="string">"_ivar"</span>);<span class="comment">//通过变量名称获取类中的实例成员_ivar</span></div><div class="line">        object_setIvar(<span class="keyword">self</span>, var, <span class="string">@"test"</span>);<span class="comment">//这里把实例变量_ivar的值更改为"test"，覆盖掉原理的"ivar"</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)printfIvars</div><div class="line">&#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count;</div><div class="line">    <span class="comment">//获取对象的实例变量列表，包含属性自动创建的示例变量，本例子中属性property自动创建_property示例变量也会在变量列表中,******************注意，返回的列表不包含父类的成员变量和属性******************。</span></div><div class="line">    Ivar *ivarList =  class_copyIvarList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        Ivar ivar = ivarList[i];</div><div class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *type = ivar_getTypeEncoding(ivar);<span class="comment">//获取变量的类型</span></div><div class="line">        <span class="built_in">NSString</span> *stringType =  [<span class="built_in">NSString</span> stringWithCString:type encoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">        <span class="built_in">NSString</span> *name = [<span class="built_in">NSString</span> stringWithCString:ivar_getName(ivar) encoding:<span class="built_in">NSUTF8StringEncoding</span>];<span class="comment">//获取变量的名字</span></div><div class="line"><span class="comment">//打印变量类型，变量名，变量地址相对于对象地址的偏移量，变量的值						              NSLog(@"=====%@=====%@===%td====%@",stringType,name,ivar_getOffset(ivar),object_getIvar(self, ivar));</span></div><div class="line">    &#125;</div><div class="line">    free(ivarList);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>通过调用printfIvars的结果是<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">2017-08-15</span> <span class="number">17</span>:<span class="number">37:18.872</span> ZZFRuntimeDemo[<span class="number">7728:503157</span>] =====@"NSString"=====_ivar===<span class="number">760</span>====test</div><div class="line"><span class="number">2017-08-15</span> <span class="number">17</span>:<span class="number">37:18.872</span> ZZFRuntimeDemo[<span class="number">7728:503157</span>] =====@"NSString"=====_property===<span class="number">768</span>====zhang</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/dispatch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -894,7 +894,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-03T16:00:00+08:00">
                 2017-07-03
@@ -915,7 +915,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1041,7 +1041,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-19T17:28:23+08:00">
                 2016-08-19
@@ -1062,7 +1062,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1179,7 +1179,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-19T17:28:23+08:00">
                 2016-08-19
@@ -1200,7 +1200,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1365,7 +1365,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-19T17:28:23+08:00">
                 2016-08-19
@@ -1386,7 +1386,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1507,7 +1507,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -1518,7 +1518,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -1529,7 +1529,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -1579,7 +1579,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
